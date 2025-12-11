@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
 jobs:
   test:
     runs-on: ubuntu-22.04
@@ -12,6 +12,8 @@ jobs:
         node-version: [20, 18, 16, 14, 12, 10, 8, 6]
     name: Run tests on Node.js ${{ matrix.node-version }}
     steps:
+    - name: Configure npm time machine registry
+      run: npm config set registry https://:2024-05-09T05%3A15%3A53.058Z@time-machines-npm.sealsecurity.io/
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2-beta
       with:
@@ -20,6 +22,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Install dependencies
-      run:  npm install --legacy-peer-deps
+      run: npm install --legacy-peer-deps
     - name: Run tests
       run: npm test

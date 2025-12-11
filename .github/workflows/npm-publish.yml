@@ -4,11 +4,13 @@ on:
     types: [created]
 jobs:
   publish:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       id-token: write
     steps:
+    - name: Configure npm time machine registry
+      run: npm config set registry https://:2024-05-09T05%3A15%3A53.058Z@time-machines-npm.sealsecurity.io/
     - name: Setup Node.js 18
       uses: actions/setup-node@v3
       with:
